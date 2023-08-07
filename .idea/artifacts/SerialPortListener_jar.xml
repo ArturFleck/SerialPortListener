@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="SerialPortListener:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/SerialPortListener_jar</output-path>
+    <root id="archive" name="SerialPortListener.jar">
+      <element id="module-output" name="SerialPortListener" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../jSerialComm-2.10.3.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
