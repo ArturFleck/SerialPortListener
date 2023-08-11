@@ -1,5 +1,10 @@
 import com.fazecast.jSerialComm.*;
 
+import java.awt.*;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
+import java.awt.event.InputEvent;
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -66,6 +71,11 @@ public class SerialPortListener {
                         throw new RuntimeException(e);
                     }
 
+                    try {
+                        setProgram(data);
+                    } catch (AWTException | InterruptedException | IOException e) {
+                        System.out.println(e);
+                    }
 
                     i++;
                     if (i == 2) {
@@ -77,5 +87,46 @@ public class SerialPortListener {
         } else {
             System.err.println("Failed to open the port.");
         }
+
+
     }
+
+    public static void setProgram(String message) throws AWTException, InterruptedException, IOException {
+
+        int xCoord = 423;   // 393
+        int yCoord = 308;   // 240
+
+        // Move the cursor
+        int mask = InputEvent.BUTTON1_DOWN_MASK;
+        Robot robot = new Robot();
+        robot.mouseMove(xCoord, yCoord);
+        robot.mousePress(mask);
+        Thread.sleep(50);
+        robot.mouseRelease(mask);
+
+        robot.keyPress(KeyEvent.VK_CONTROL);
+        robot.keyPress(KeyEvent.VK_A);
+        Thread.sleep(50);
+        robot.keyRelease(KeyEvent.VK_CONTROL);
+        robot.keyRelease(KeyEvent.VK_A);
+        Thread.sleep(50);
+        robot.keyPress(KeyEvent.VK_DELETE);
+        Thread.sleep(50);
+        robot.keyRelease(KeyEvent.VK_DELETE);
+
+        Toolkit toolkit = Toolkit.getDefaultToolkit();
+        Clipboard clipboard = toolkit.getSystemClipboard();
+        StringSelection strSel = new StringSelection(message);
+        clipboard.setContents(strSel, null);
+
+        robot.keyPress(KeyEvent.VK_CONTROL);
+        robot.keyPress(KeyEvent.VK_V);
+        Thread.sleep(50);
+        robot.keyRelease(KeyEvent.VK_CONTROL);
+        robot.keyRelease(KeyEvent.VK_V);
+        Thread.sleep(50);
+        robot.keyPress(KeyEvent.VK_ENTER);
+        robot.keyRelease(KeyEvent.VK_ENTER);
+    }
+
 }
