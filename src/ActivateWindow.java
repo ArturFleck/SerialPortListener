@@ -6,14 +6,14 @@ import java.io.IOException;
 
 public class ActivateWindow {
     public static void main(String[] args) throws IOException {
-        String progName = "notepad++";
+        String progName = "chrome.exe";
         int processId = GuiProcessesList.findMyApp(progName); // Replace with the desired process ID
 
         if (activateWindowByProcessId(processId)) {
             System.out.println("Window activated successfully.");
         } else {
             System.out.println("Failed to activate the window.");
-            Runtime.getRuntime().exec("taskkill /f /im " + progName);
+            Runtime.getRuntime().exec("cmd /c start " + progName);
         }
     }
 

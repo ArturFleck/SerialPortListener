@@ -4,14 +4,13 @@ import java.util.List;
 public class GuiProcessesList {
     public static void main(String[] args) {
         // Get the list of running processes
-        /*
-        ProcessHandle.allProcesses()
+/*        ProcessHandle.allProcesses()
                 .filter(GuiProcessesList::hasGui)
                 .forEach(process -> System.out.println(process.pid() + ": " + process.info().command().orElse("")));*/
 
         //findMyApp("calc");
 
-        System.out.println(findMyApp("calc"));
+        System.out.println(findMyApp("chrome.exe"));
     }
 
     public static int findMyApp(String name){
