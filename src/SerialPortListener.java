@@ -8,6 +8,9 @@ import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class SerialPortListener {
     public static int i = 0;
@@ -50,7 +53,7 @@ public class SerialPortListener {
                     byte[] newData = new byte[chosenPort.bytesAvailable()];
                     int numRead = chosenPort.readBytes(newData, newData.length);
                     String data = new String(newData, 0, numRead);
-                    System.out.println("Received data: " + data);
+                    //System.out.println("Received data: " + data);
                     System.out.println(chosenPort.getDescriptivePortName());
 
 
@@ -71,14 +74,28 @@ public class SerialPortListener {
                         throw new RuntimeException(e);
                     }
 
+                    List<String> mes = Arrays.asList(data.split("\n"));
+
+                    for(int i=0; i<mes.size();i++)
+                        System.out.println(i + "\t" + mes.get(i));
+
+                    DirectoryScanner.NC=mes.get(0);
+                    DirectoryScanner.folder=mes.get(1);
+                    String path = DirectoryScanner.runS();
+                    System.out.println(path);
+
+
                     try {
+                        ActivateWindow.activateMyApp();
+                        Thread.sleep(100);
+
                         setProgram(data);
                     } catch (AWTException | InterruptedException | IOException e) {
                         System.out.println(e);
                     }
 
                     i++;
-                    if (i == 2) {
+                    if (i == 5) {
                         chosenPort.closePort();
                         System.exit(0);
                     }
@@ -109,10 +126,10 @@ public class SerialPortListener {
         Thread.sleep(50);
         robot.keyRelease(KeyEvent.VK_CONTROL);
         robot.keyRelease(KeyEvent.VK_A);
-        Thread.sleep(50);
+/*        Thread.sleep(50);
         robot.keyPress(KeyEvent.VK_DELETE);
         Thread.sleep(50);
-        robot.keyRelease(KeyEvent.VK_DELETE);
+        robot.keyRelease(KeyEvent.VK_DELETE);*/
 
         Toolkit toolkit = Toolkit.getDefaultToolkit();
         Clipboard clipboard = toolkit.getSystemClipboard();
@@ -124,7 +141,7 @@ public class SerialPortListener {
         Thread.sleep(50);
         robot.keyRelease(KeyEvent.VK_CONTROL);
         robot.keyRelease(KeyEvent.VK_V);
-        Thread.sleep(50);
+        Thread.sleep(100);
         robot.keyPress(KeyEvent.VK_ENTER);
         robot.keyRelease(KeyEvent.VK_ENTER);
     }

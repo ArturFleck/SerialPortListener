@@ -6,7 +6,10 @@ import java.io.IOException;
 
 public class ActivateWindow {
     public static void main(String[] args) throws IOException {
-        String progName = "chrome.exe";
+        activateMyApp();
+    }
+    public static void activateMyApp() throws IOException {
+        String progName = "notepad++.exe";
         int processId = GuiProcessesList.findMyApp(progName); // Replace with the desired process ID
 
         if (activateWindowByProcessId(processId)) {

@@ -3,12 +3,16 @@ import com.sun.jna.Pointer;
 import com.sun.jna.platform.win32.User32;
 import com.sun.jna.platform.win32.WinDef;
 import com.sun.jna.platform.win32.WinUser;
+
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class ActiveWindowList {
     public static void main(String[] args) {
+        startMyApp();
+    }
+
+    public static void startMyApp(){
         List<String> activeWindows = getActiveWindowTitles();
 
         boolean runOrNot = false;
