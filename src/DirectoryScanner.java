@@ -7,6 +7,10 @@ public class DirectoryScanner {
     public static String folder; //folder = "МВ 72 151Л"
     public static String NC; //NC = "17.mpr"
 
+/*    public static String folder = "МВ 72 151Л";
+    public static String NC = "20.mpr";*/
+
+
     public static void main(String[] args) {
         String path = "D:/_profile/Desktop/Типові меблі ЕЛКОН ДІЗАЙН/ТИПОВІ КУХНІ/";
 
@@ -34,12 +38,12 @@ public class DirectoryScanner {
 
         List<File> resultList = new ArrayList<File>();
 
-
+        String NC2 = NC.replace(".mpr","") + "_R.mpr";
         // get all the files from a directory
         File[] fList = directory.listFiles();
         resultList.addAll(Arrays.asList(fList));
         for (File file : fList) {
-            if (file.isFile() && (file.getName().contains(NC)) && (file.getAbsolutePath().contains(folder))) {
+            if (file.isFile() && (file.getAbsolutePath().contains(folder)) && (file.getName().contains(NC) || file.getName().contains(NC2))) {
                  {
                     //System.out.println(file.getAbsolutePath());
                     //System.out.println(file.getName());

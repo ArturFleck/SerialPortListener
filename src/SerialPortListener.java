@@ -1,4 +1,6 @@
-import com.fazecast.jSerialComm.*;
+import com.fazecast.jSerialComm.SerialPort;
+import com.fazecast.jSerialComm.SerialPortDataListener;
+import com.fazecast.jSerialComm.SerialPortEvent;
 
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
@@ -8,7 +10,6 @@ import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -22,8 +23,8 @@ public class SerialPortListener {
         String portName = null;
         for (SerialPort port : serialPorts) {
             //System.out.println(port.getSystemPortName() + " " + port.getDescriptivePortName());
-            if (port.getDescriptivePortName().contains("Barcode Scanner") ){
-                portName=port.getSystemPortName();
+            if (port.getDescriptivePortName().contains("Barcode Scanner")) {
+                portName = port.getSystemPortName();
             }
         }
 
@@ -62,7 +63,7 @@ public class SerialPortListener {
                         try {
                             log.createNewFile();
                         } catch (IOException e) {
-                            throw new RuntimeException(e);
+                            System.out.println(e);
                         }
                     }
                     FileWriter fw = null;
@@ -71,28 +72,37 @@ public class SerialPortListener {
                         fw.write(data + "\n");
                         fw.close();
                     } catch (IOException e) {
-                        throw new RuntimeException(e);
+                        System.out.println(e);
                     }
 
                     List<String> mes = Arrays.asList(data.split("\n"));
-                    String temp = mes.get(1).replace("\r","");
-                    mes.set(1,temp);
+                    String temp = mes.get(1).replace("\r", "");
+                    mes.set(1, temp);
 
-                    for(int i=0; i<mes.size();i++)
+                    for (int i = 0; i < mes.size(); i++)
                         System.out.println(i + "\t" + mes.get(i));
 
-                    DirectoryScanner.NC=mes.get(0);
-                    DirectoryScanner.folder=mes.get(1);
+                    DirScan.NC = mes.get(0);
+                    DirScan.folder = mes.get(1);
+                    try {
+                        String temp2 = DirScan.findDirByFolderName();
+                        String temp3 = DirScan.findFileInFolder(temp2);
+                        System.out.println(temp3);
+                    } catch (IOException e) {
+                        System.out.println(e);
+                    }
+
+                    DirectoryScanner.NC = mes.get(0);
+                    DirectoryScanner.folder = mes.get(1);
                     String path = DirectoryScanner.runS();
-                    if (path!=null){
+                    if (path != null) {
                         data = path;
-                    }else{
+                    } else {
                         data = mes.get(0);
                     }
-                    System.out.println(data);
+                    //System.out.println(data);
 
                     try {
-
                         ActivateWindow.activateMyApp();
                         Thread.sleep(200);
                         setProgram(data);
@@ -101,7 +111,7 @@ public class SerialPortListener {
                     }
 
                     i++;
-                    if (i == 10) {
+                    if (i == 5) {
                         chosenPort.closePort();
                         System.exit(0);
                     }
