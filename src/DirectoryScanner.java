@@ -4,8 +4,8 @@ import java.util.Arrays;
 import java.util.List;
 public class DirectoryScanner {
     public static String nnn;
-    public static String folder = "МВ 72 151Л";
-    public static String NC = "17.mpr";
+    public static String folder; //folder = "МВ 72 151Л"
+    public static String NC; //NC = "17.mpr"
 
     public static void main(String[] args) {
         String path = "D:/_profile/Desktop/Типові меблі ЕЛКОН ДІЗАЙН/ТИПОВІ КУХНІ/";
@@ -21,9 +21,9 @@ public class DirectoryScanner {
 
         //System.out.println("----------------\n");
 
-        System.out.println(path);
+/*        System.out.println(path);
         System.out.println(folder);
-        System.out.println(NC);
+        System.out.println(NC);*/
 
         listf(path);
         return nnn;
@@ -41,9 +41,10 @@ public class DirectoryScanner {
         for (File file : fList) {
             if (file.isFile() && (file.getName().contains(NC)) && (file.getAbsolutePath().contains(folder))) {
                  {
-                    System.out.println(file.getAbsolutePath());
-                    System.out.println(file.getName());
+                    //System.out.println(file.getAbsolutePath());
+                    //System.out.println(file.getName());
                     nnn= file.getAbsolutePath();
+                    break;
                 }
             } else if (file.isDirectory()) {
                 resultList.addAll(listf(file.getAbsolutePath()));

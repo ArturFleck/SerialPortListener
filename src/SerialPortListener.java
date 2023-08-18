@@ -75,6 +75,8 @@ public class SerialPortListener {
                     }
 
                     List<String> mes = Arrays.asList(data.split("\n"));
+                    String temp = mes.get(1).replace("\r","");
+                    mes.set(1,temp);
 
                     for(int i=0; i<mes.size();i++)
                         System.out.println(i + "\t" + mes.get(i));
@@ -82,20 +84,24 @@ public class SerialPortListener {
                     DirectoryScanner.NC=mes.get(0);
                     DirectoryScanner.folder=mes.get(1);
                     String path = DirectoryScanner.runS();
-                    System.out.println(path);
-
+                    if (path!=null){
+                        data = path;
+                    }else{
+                        data = mes.get(0);
+                    }
+                    System.out.println(data);
 
                     try {
-                        ActivateWindow.activateMyApp();
-                        Thread.sleep(100);
 
+                        ActivateWindow.activateMyApp();
+                        Thread.sleep(200);
                         setProgram(data);
                     } catch (AWTException | InterruptedException | IOException e) {
                         System.out.println(e);
                     }
 
                     i++;
-                    if (i == 5) {
+                    if (i == 10) {
                         chosenPort.closePort();
                         System.exit(0);
                     }
@@ -104,8 +110,6 @@ public class SerialPortListener {
         } else {
             System.err.println("Failed to open the port.");
         }
-
-
     }
 
     public static void setProgram(String message) throws AWTException, InterruptedException, IOException {
@@ -142,8 +146,7 @@ public class SerialPortListener {
         robot.keyRelease(KeyEvent.VK_CONTROL);
         robot.keyRelease(KeyEvent.VK_V);
         Thread.sleep(100);
-        robot.keyPress(KeyEvent.VK_ENTER);
-        robot.keyRelease(KeyEvent.VK_ENTER);
+/*        robot.keyPress(KeyEvent.VK_ENTER);
+        robot.keyRelease(KeyEvent.VK_ENTER);*/
     }
-
 }
