@@ -10,6 +10,7 @@ import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.Arrays;
 import java.util.List;
 
@@ -106,6 +107,12 @@ public class SerialPortListener {
                         ActivateWindow.activateMyApp();
                         Thread.sleep(200);
                         setProgram(data);
+
+                        OutputStream outputStream = chosenPort.getOutputStream();
+                        // Send the beep command. The exact command might vary based on your scanner's specifications.
+                        String beepCommand = "B"; // Replace with the actual beep command
+                        outputStream.write(beepCommand.getBytes());
+                        outputStream.close();
                     } catch (AWTException | InterruptedException | IOException e) {
                         System.out.println(e);
                     }
