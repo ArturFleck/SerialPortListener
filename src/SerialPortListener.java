@@ -11,6 +11,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -111,8 +112,14 @@ public class SerialPortListener {
                         OutputStream outputStream = chosenPort.getOutputStream();
                         // Send the beep command. The exact command might vary based on your scanner's specifications.
                         String beepCommand = "B"; // Replace with the actual beep command
+
+                        outputStream.write(beepCommand.getBytes());
+                        Thread.sleep(200);
                         outputStream.write(beepCommand.getBytes());
                         outputStream.close();
+
+
+
                     } catch (AWTException | InterruptedException | IOException e) {
                         System.out.println(e);
                     }
