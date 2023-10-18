@@ -30,6 +30,9 @@ public class SerialPortListener {
             }
         }
 
+        if(portName == null)
+            portName="COM0";
+
         // Select the port you want to listen to (COM6 in this case)
         //SerialPort chosenPort = SerialPort.getCommPort("COM8");
         SerialPort chosenPort = SerialPort.getCommPort(portName);
@@ -133,6 +136,22 @@ public class SerialPortListener {
             });
         } else {
             System.err.println("Failed to open the port.");
+            File log = new File("D:/_profile/Desktop/log.txt");
+            if (!log.exists()) {
+                try {
+                    log.createNewFile();
+                } catch (IOException e) {
+                    System.out.println(e);
+                }
+            }
+            FileWriter fw = null;
+            try {
+                fw = new FileWriter(log, true);
+                fw.write("Failed to open port\n" + java.time.LocalDate.now() + "\t" + java.time.LocalTime.now() + "\n");
+                fw.close();
+            } catch (IOException e) {
+                System.out.println(e);
+            }
         }
     }
 

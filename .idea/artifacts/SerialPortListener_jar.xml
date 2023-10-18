@@ -3,6 +3,10 @@
     <output-path>$PROJECT_DIR$/out/artifacts/SerialPortListener_jar</output-path>
     <root id="archive" name="SerialPortListener.jar">
       <element id="module-output" name="SerialPortListener" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../jna-5.13.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../jna-platform-5.13.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../jna-platform-jpms-5.13.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../jna-jpms-5.13.0.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$PROJECT_DIR$/../jSerialComm-2.10.3.jar" path-in-jar="/" />
     </root>
   </artifact>
